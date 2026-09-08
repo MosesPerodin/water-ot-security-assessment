@@ -98,7 +98,7 @@ It is scored and carries a severity (`Low / Informational`, RRA:52) and a roadma
 cross-referenced, and `(New)` will not remain meaningful as the portfolio ages. Unaffected by
 this update.
 
-### 4. Two artifacts contain no finding references whatsoever — **re-confirmed 2026-08-30**
+### 4. Two artifacts contain no finding references whatsoever — **RESOLVED (expected by design), 2026-09-08**
 
 | File | Finding references |
 |---|---|
@@ -106,10 +106,15 @@ this update.
 | `Artifact-5-ATTCK-Oldsmar-Case-Study.md` | none |
 
 Re-scanned directly for this update (both files unchanged since first generation). Confirmed
-still zero — not a stale result. Whether this is expected — an asset inventory and an external
-case study may legitimately not cite assessment findings — or a missing linkage remains a
-judgement call.
-**UNVERIFIED — confirm whether these two artifacts are intended to reference the findings register.**
+still zero — not a stale result.
+
+**RESOLVED (expected by design), 2026-09-08:** neither artifact is a source of findings and neither
+should cite the register. Artifact 4 is a foundational input — it produces the consequence-based
+criticality ranking that the RRA's Section 1 summarizes and that feeds finding severity scoring
+downstream, so it precedes findings in the analysis chain (the RRA cites Artifact 4, not the
+reverse). Artifact 5 is a blue-team retrospective on the external Oldsmar 2021 incident mapped to
+MITRE ATT&CK for ICS; it does not assess the Shenandoah Valley environment and therefore has no
+findings against it to cite.
 
 ### 5. `Finding 2` is defined but barely carried forward — RESOLVED
 
