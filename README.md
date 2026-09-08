@@ -164,7 +164,7 @@ by the artifact that identified it.
 | Scheme | Used by | Meaning |
 |---|---|---|
 | `Finding N` (bare integer) | Artifact 3 | Findings 1–4. Predate the scoped convention; **not renumbered**, because they are cross-referenced by ID across eight committed documents |
-| `Finding N.N` (artifact-scoped) | Artifacts 6 and 7 | 6.1–6.4 (detection coverage), 7.1–7.3 (systemic/governance) |
+| `Finding N.N` (artifact-scoped) | Artifacts 3, 6, and 7 | 3.1 (Artifact 3 follow-up — sub-finding surfaced during remediation, after Findings 1–4 were already fixed as bare integers; scoped notation marks it as a distinct, later-discovered issue rather than triggering renumbering), 6.1–6.4 (detection coverage), 7.1–7.3 (systemic/governance) |
 | `Finding A`–`H` (lettered) | Artifact 8 | An audience-specific re-presentation of the above for a non-technical reader — *not* a separate investigation. Every letter traces back to a numbered finding |
 | `Fault N` | Mirroring Investigation Handoff (6a) | Deliberately **not** called a "finding" — these are unresolved debugging observations, not security findings against the assessed environment |
 
