@@ -7,6 +7,8 @@
 **Assessment period:** August 28–30, 2026
 **Related artifacts:** Artifact 3 (Segmentation Assessment), Artifact 4 (Asset Inventory & Criticality), RRA, ERP
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## 1. Executive Summary

@@ -6,6 +6,8 @@
 **Prepared for:** Risk Committee / Board Review
 **Source evidence:** Artifact 3 (Findings 1–4), Phase 3 network scan data, PLC egress anomaly investigation (Artifact 3, Appendix A)
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## 1. Asset Inventory

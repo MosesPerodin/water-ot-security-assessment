@@ -6,6 +6,8 @@
 **IEC reference:** ISA/IEC 62443-3-3 System Security Requirements and Security Levels, mapped to the 62443 Foundational Requirements (FR1–FR7)
 **Evidence basis:** Artifact 3, RRA, ERP, EPA Checklist Assessment
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 | NIST 800-53 Control | IEC 62443 Requirement | Shenandoah Valley Status | Evidence |

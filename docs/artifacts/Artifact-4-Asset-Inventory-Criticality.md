@@ -6,6 +6,8 @@
 **Prepared for:** Internal risk and asset management reference; input to Risk & Resilience Assessment
 **Relationship to other artifacts:** This document is the foundational input the RRA's Section 1 summarizes — this is the full methodology and reasoning behind that summary table, not a duplicate of it
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## 1. Executive Summary

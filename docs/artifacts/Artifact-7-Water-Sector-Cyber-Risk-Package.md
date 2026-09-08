@@ -6,6 +6,8 @@
 **Supporting frameworks:** EPA 817-B-23-001, AWWA cybersecurity guidance, NIST SP 800-53 Rev. 5, ISA/IEC 62443-3-3, NIST SP 800-82
 **Assessment period:** August 2026
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## 1. Purpose and Structure

@@ -4,6 +4,8 @@
 **Assessment type:** Blue-team retrospective — historical incident mapped to MITRE ATT&CK for ICS, with defensive lessons applied to Shenandoah Valley Water Authority's own architecture
 **Purpose:** demonstrate threat-modeling capability using a real, sector-relevant incident, and connect its lessons directly to controls already implemented in this portfolio (Artifact 3)
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement. (The Oldsmar, Florida incident analyzed here is a real, publicly documented event; only the connection to Shenandoah Valley is fictional.)
+
 ---
 
 ## 1. Executive Summary

@@ -5,6 +5,8 @@
 **Format:** Incident response playbook — checklist/procedure, for use during an active event
 **Basis:** Segmented architecture per Artifact 3; conduit map: HMI↔PLC (Modbus/502), HMI↔Historian (PostgreSQL/5432)
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## 1. Incident Classification

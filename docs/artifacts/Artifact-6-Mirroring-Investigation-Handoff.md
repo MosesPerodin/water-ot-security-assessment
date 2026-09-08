@@ -5,6 +5,8 @@
 **Objective:** configure traffic mirroring from the three OT zone-boundary ports (fwpr101p0/PLC, fwpr100p0/HMI, fwpr102p0/Historian) to the Monitor VM (VM104) so Suricata can inspect cross-zone conduit traffic, not just traffic addressed directly to itself.
 **Status at time of writing:** paused. One fault fully resolved and confirmed. A second, distinct fault identified and diagnosed to the host/guest boundary, but not yet root-caused. Decision made to pursue an alternate path for Artifact 6's evidence rather than continue this investigation indefinitely — documented here as a legitimate, partially-resolved finding, consistent with the documentation discipline applied to the Phase 3 PLC-historian egress anomaly during its own investigation (Finding 3.1, later diagnosed via a targeted toggle test).
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## Background

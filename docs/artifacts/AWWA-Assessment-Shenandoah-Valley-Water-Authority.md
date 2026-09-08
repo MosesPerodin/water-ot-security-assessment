@@ -6,6 +6,8 @@
 **Evidence basis:** Artifact 3 (Segmentation Assessment), RRA, ERP
 **Scored:** post-remediation (current) state, with pre-remediation shown for contrast where the delta matters
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## Scoring Summary

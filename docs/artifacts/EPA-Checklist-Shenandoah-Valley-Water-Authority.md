@@ -6,6 +6,8 @@
 **Priority items** (marked with EPA's own `*`) are drawn from the joint EPA/CISA/FBI "Top Cyber Actions for Securing Water Systems"
 **Evidence basis:** Artifact 3, RRA, ERP, AWWA Assessment
 
+**Fictional utility.** Shenandoah Valley Water Authority is not a real organization — it was created for this assessment portfolio. Every finding, evidence item, "Prepared for" line, and "Internal / security-sensitive" classification in this document is an artifact of this training portfolio, not a record of a real engagement.
+
 ---
 
 ## 1. IDENTIFY
