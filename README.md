@@ -14,6 +14,8 @@ system, modeled on the process and network realities of a real one.
 management experience; worked with Ignition SCADA HMI for monitoring and
 operational insight; now pivoting to OT/ICS cybersecurity assessment.
 
+**Start here:** [Artifact 3 — Segmentation Assessment](docs/artifacts/Artifact-3-Segmentation-Assessment.md) (flagship, technical) · [Artifact 8 — Client Deliverable Report](docs/artifacts/Artifact-8-Client-Deliverable-Report.md) (executive summary, non-technical)
+
 ---
 
 ## 1. What This Portfolio Is
