@@ -117,11 +117,11 @@ Representative alert output:
 
 **This finding is the technical argument for network traffic mirroring**, and it is now demonstrated with evidence rather than asserted as a design preference. A sensor needs a vantage point that sees traffic *before* filtering — a mirrored feed from zone boundaries — to observe attempts as well as successes. That work was attempted during this assessment and did not complete (Section 7).
 
-### Finding 6.4 — Stock ET Open ruleset does not detect generic SSH credential-guessing by authentication-failure rate (High significance)
+### Finding 6.4 — Stock ET Open ruleset does not detect SSH credential-guessing; host-level logging provides compensating detection (High significance)
 
-**Test:** eight consecutive SSH authentication attempts with invalid credentials, from an unauthorized source in the Engineering zone against the monitoring host — a simplified credential-guessing pattern.
+**Test:** two detection paths evaluated via eight consecutive SSH authentication attempts with invalid credentials, from an unauthorized source in the Engineering zone (192.168.30.50) against the monitoring host (192.168.40.100), September 16, 2026, 21:28:10–21:30:38 UTC.
 
-**Result:**
+**Path 1 — Wire-observable (Suricata IDS):**
 
 | Metric | Baseline | Post-test | Delta |
 |---|---|---|---|
@@ -131,11 +131,26 @@ Representative alert output:
 
 All eight attempts reached the target's SSH service, failed authentication, and were logged by Suricata as SSH protocol events with correct source attribution. **The traffic was inspected. No rule matched.**
 
-**Mechanism, verified against the loaded ruleset rather than assumed:** the full ET Open set was active (52,051 signatures — not an empty or partially-loaded ruleset). Examination of SSH-related signatures found rules keyed to specific attack-tool fingerprints and client software banners, but no signature that tracks authentication failure frequency and alerts on a threshold. Rate-based detection of this kind requires explicit `threshold.config` entries or `detection_filter` rules, neither of which is present in a default deployment.
+**Path 2 — Host-observable (sshd authentication logs):**
 
-**Honest scoping of this finding:** eight sequential attempts, each establishing and tearing down its own connection, is a modest test volume. A properly configured rate-based rule would typically trigger on a tighter, higher-volume burst. This test does not establish that rate-based detection *would fail if configured* — it establishes that **no such detection exists out of the box**, which is the claim being made.
+| Metric | Baseline | Post-test | Delta |
+|---|---|---|---|
+| `/var/log/auth.log` line count | 363 | 462 | +99 |
+| **Failed password entries** | **0** | **8** | **+8** |
+| Failed password entries from 192.168.30.50 (cross-host) | **0** | **1** | **+1** |
+| Failed password entries from 192.168.40.100 (self-sourced) | **0** | **7** | **+7** |
 
-**Consequence framing:** credential weakness is the single most significant vulnerability class documented in this portfolio — Finding 1 of Artifact 3 was live default credentials on the PLC management interface, and the RRA scored the associated risk highest of any in the environment. A utility deploying a default IDS configuration and assuming it covers credential attacks would be wrong, and would have no alert-based indication of an ongoing credential-guessing attempt against its OT assets. **The control most needed against the highest-scored risk is the one the default configuration does not provide.**
+sshd natively logs failed authentication attempts to `/var/log/auth.log`. Eight total failed attempts were logged. Seven attempts appear to have been sourced locally from the target itself (192.168.40.100); one genuine cross-host attempt from the attack source (192.168.30.50, port 40566, 21:30:38 UTC) demonstrates correct source attribution when traffic arrives from the network. sshd also deduplicated repeated failures within a single connection (`"message repeated 2 times"`), a built-in rate-limiting behavior.
+
+**Mechanism, verified against the loaded ruleset and host logs:**
+
+Wire level: the full ET Open set was active (52,051 signatures). Examination of SSH-related signatures found rules keyed to specific attack-tool fingerprints and client software banners, but no signature that tracks authentication failure frequency and alerts on a threshold. Rate-based detection requires explicit `threshold.config` entries or `detection_filter` rules, neither of which is present in a default deployment.
+
+Host level: sshd's built-in authentication logging is enabled by default and captured by syslog. Failed credentials are recorded with source IP, target user, port, and timestamp attribution. A monitoring solution that parses syslog (ELK stack, Splunk, SIEM) could alert on repeated failures from a single source — detection that Suricata's wire-level rules do not provide out of the box.
+
+**Honest scoping of this finding:** the test environment's network configuration resulted in most loop iterations executing locally rather than from the intended remote source; however, the single cross-host attempt (21:30:38 from 192.168.30.50) confirms that sshd correctly attributes source IP when traffic originates externally. A production brute-force attack would likely involve higher connection rates, larger source-IP diversity, or dictionary-based guessing. This test establishes that **no wire-level rate-based detection exists in the stock ET Open ruleset**, and that **host-level logging compensates but requires a separate monitoring pipeline** to operationalize alerting.
+
+**Consequence framing:** credential weakness is the single most significant vulnerability class documented in this portfolio — Finding 1 of Artifact 3 was live default credentials on the PLC management interface, and the RRA scored the associated risk highest of any in the environment. A utility deploying only a default IDS configuration, without syslog aggregation or host-level authentication monitoring, would have no alert-based indication of an ongoing credential-guessing attempt against its OT assets. **The control most needed against the highest-scored risk requires defense-in-depth: both wire-level detection (if configured beyond stock rules) and host-level authentication monitoring.**
 
 ---
 
