@@ -20,6 +20,8 @@ exist and function — not an operator demonstrating exploitation.
   validate a control (e.g. credential test against a known default), never to
   what a red team would do to establish persistence or move laterally
 
+**Lab construction note:** the author built the environment assessed in this portfolio. The findings documented here reflect defects introduced and subsequently surfaced by the assessment procedure; they are not claims about a pre-existing utility network, and they demonstrate the assessment methodology applied to a known-state environment rather than discovered on an unfamiliar production system.
+
 Anything that cannot be framed as "an assessor verifying a control" does not
 belong in the portfolio.
 

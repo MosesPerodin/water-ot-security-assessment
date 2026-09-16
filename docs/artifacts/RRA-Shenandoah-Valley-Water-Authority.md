@@ -68,7 +68,7 @@ Likelihood and impact scored 1 (low) – 5 (high). Likelihood reflects **pre-rem
 | Configuration-vs-enforcement gap recurring on a future host | 3 | 3 | 9 | **Medium** |
 | PLC-historian egress anomaly (Finding 3.1) exploited as an attack vector | 1 | 2 | 2 | **Low** |
 
-**Top risk driver:** the Critical-rated risk (PLC parameter modification) scores highest not because the technique is sophisticated — it is not — but because likelihood and impact are simultaneously maximal: the path required no special access and the consequence reaches the physical process directly. This is the risk profile most characteristic of OT environments generally, and is why segmentation was prioritized as the first remediation action ahead of the credential fix itself (a network path with a bad password is worse than a bad password with no path).
+**Top risk driver:** the PLC parameter modification was the highest-scoring risk pre-remediation (Critical-rated); it scores high because likelihood and impact are simultaneously maximal: the path required no special access and the consequence reaches the physical process directly. Post-remediation, this risk is re-scored to Medium (reduced likelihood), but the original rating illustrates why segmentation was prioritized as the first remediation action ahead of the credential fix itself (a network path with a bad password is worse than a bad password with no path). This is the risk profile most characteristic of OT environments generally.
 
 ---
 
