@@ -50,9 +50,9 @@ This assessment deployed a network intrusion detection system into Shenandoah Va
 
 Suricata 7.0.3 was deployed to the Monitoring zone host with the Emerging Threats Open ruleset (52,051 signatures active at time of testing).
 
-**Finding 6.1 — Stock configuration referenced a network interface that does not exist on this platform, causing continuous service failure.**
+**Finding 6.1 — Lab-build defect: Suricata configuration referenced a nonexistent interface; surfaced by operational verification.**
 
-The distribution's default `suricata.yaml` specifies `eth0` as the af-packet capture interface. The deployment host uses predictable network interface naming, where the interface is `ens18`. Suricata loaded its full ruleset successfully on each start, then failed when attempting to open a capture socket on a nonexistent device, and was restarted automatically by its service manager — accumulating over 14,000 restart cycles.
+During environment construction, I deployed Suricata with the distribution's default `suricata.yaml` specifying `eth0` as the af-packet capture interface, without verifying it matched the actual hardware. The deployment host uses predictable network interface naming, where the actual interface is `ens18`. Suricata loaded its full ruleset successfully on each start, then failed when attempting to open a capture socket on the nonexistent device, and was restarted automatically by its service manager — accumulating over 14,000 restart cycles.
 
 **Why this matters beyond the immediate fix:** the service reported `active` to standard status checks throughout, because each check happened to catch it mid-restart. An operator monitoring service health through routine status polling would have seen a running IDS. In practice there was no packet inspection occurring at all, and no alerts were possible. **A monitoring system that fails silently while reporting healthy is worse than one that fails visibly**, because it produces false confidence in a control that is not operating.
 

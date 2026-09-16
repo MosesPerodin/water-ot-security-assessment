@@ -101,8 +101,8 @@ This closes the single highest-severity open item identified across the Phase 4 
 **Finding 2 — Historian database access controlled at the application layer only (High) — REMEDIATED Aug 26, 2026.**
 PostgreSQL's `pg_hba.conf` restricts connections to a single IP internally, but this control lived entirely inside the database engine. At the network layer — the layer an attacker touches first — the port was open to the entire Engineering zone. A network-layer control is the correct primary defense; an application-layer control alone is a single point of failure.
 
-**Finding 3 — Configuration-vs-enforcement gap on PLC and historian firewalls (Medium, methodological) — REMEDIATED Aug 26, 2026.**
-Both hosts had Proxmox firewall configuration files (`101.fw`, `102.fw`) present and syntactically correct since Phase 1, specifying `policy_in: DROP`. Despite this, Proxmox was not enforcing them — the guest NICs had `firewall=0` set at the VM configuration level, and the compiled firewall ruleset showed no chains for either host's network interface. The configuration existed; enforcement did not. This is a general class of finding relevant to any environment audit: a documented control is not evidence the control is active, and configuration review must be paired with live-enforcement verification, not assumed from file contents.
+**Finding 3 — Lab-build defect: Configuration-vs-enforcement gap on PLC and historian firewalls; surfaced by assessment discipline (Medium, methodological) — REMEDIATED Aug 26, 2026.**
+During environment construction, both the PLC and historian received Proxmox firewall configuration files (`101.fw`, `102.fw`) specifying `policy_in: DROP`, but I left the guest NICs configured with `firewall=0` at the VM configuration level — preventing enforcement despite correct rule content. The compiled firewall ruleset showed no chains for either host's network interface. The configuration existed; enforcement did not. The assessment methodology that validates operational state (live ruleset inspection) rather than configuration files alone caught this gap. This is a general class of lab-build error relevant to environment audits: a documented control is not evidence the control is active, and configuration review must be paired with live-enforcement verification. This finding demonstrates the discipline of validating configuration against operational reality.
 
 **Finding 4 — HMI web interface unencrypted (Medium).**
 The HMI's Apache service runs on port 80 (HTTP) with no TLS. Any HMI session, including credentials if authentication is later added, would be visible to anyone able to observe traffic on that segment.
@@ -208,7 +208,9 @@ The full IEC 62443 / NIST 800-53 control mapping is provided as a separate cross
 
 ---
 
-## Appendix A: PLC-to-Historian Egress Anomaly — Investigation Methodology
+## Appendix A: Lab-Build Defect — PLC-to-Historian Egress Anomaly; Investigation Methodology
+
+**Finding 3.1 — Lab-build defect: PLC-to-historian egress anomaly; root cause identified but unresolved.** This anomaly emerged during environment construction when I enabled `firewall=1` on the PLC VM during the Aug 25–26 assessment window. The assessment procedure that validates inter-zone access rules against actual operational traffic surfaced the underlying `firewall=1` + `br_netfilter` NAT interaction.
 
 **Symptom:** once the Proxmox firewall was enabled (`firewall=1`) on the PLC VM during the Aug 25–26 assessment window, the PLC could not establish any outbound TCP connection to any host outside its own /24 subnet — not to the historian, not to the Proxmox host's management interface, not to an arbitrary external address. This was reproducible on demand: toggling `firewall=0` restored egress immediately; toggling back to `firewall=1` broke it immediately.
 
