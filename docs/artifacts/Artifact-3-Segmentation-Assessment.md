@@ -182,7 +182,7 @@ No change. Included as the negative control confirming the remediation work did 
 
 *HMI's true before-state ICS-relevant port was already filtered prior to baseline capture — see Section 2.
 
-The core result: **the PLC's exploitable network attack surface from the Engineering zone was reduced by 80% (5 ports to 1), and the historian's database exposure to that same zone was eliminated entirely**, with zero disruption to legitimate supervisory traffic.
+The core result: **the PLC's exploitable network attack surface from the Engineering zone was reduced by 80% (5 ports to 1), and the historian's database port exposure to that same zone was eliminated entirely.** Administrative SSH access from Engineering remains open by design as the sole remaining conduit, documented in the firewall policy. No operational-data or control-logic access is available from Engineering through either protocol. Zero disruption to legitimate supervisory traffic.
 
 ---
 

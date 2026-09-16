@@ -51,7 +51,7 @@
 | 2.U | Protect security logs from tampering? | ❌ | Not assessed |
 | 2.V | Prohibit unauthorized hardware connections? | N/A | Virtualized lab environment; physical port control does not apply |
 | 2.W* | Ensure no unnecessary exploitable services on exposed assets? | ✅ | Directly addressed by segmentation remediation — PLC's four ICS protocol ports (Modbus, EtherNet/IP, S7comm, HTTP management) are no longer reachable from Engineering |
-| 2.X* | Eliminate OT asset connections to the public Internet? | ✅ | OT-zone hosts, including the assessment platform, have no internet egress by design (verified architectural constraint) |
+| 2.X* | Eliminate OT asset connections to the public Internet? | ✅ | OT-zone hosts have no external internet egress by design. Administrative SSH access between zones is permitted and documented in the zone firewall policies (Artifact 3, Section 5) |
 
 ---
 

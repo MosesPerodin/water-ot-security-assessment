@@ -77,7 +77,7 @@ Likelihood and impact scored 1 (low) – 5 (high). Likelihood reflects **pre-rem
 | Framework | Relevant Provision | Shenandoah Valley Status |
 |---|---|---|
 | AWIA §2013 | Risk and Resilience Assessment — malevolent acts and natural hazards to system | This document, plus Artifact 3, constitutes the cybersecurity-malevolent-act component of the RRA requirement |
-| EPA Cybersecurity Checklist | Network segmentation between IT/OT and within OT zones | **Substantially improved** post-remediation (Artifact 3, Section 7) — Field/Control and Historian access from Engineering now default-deny |
+| EPA Cybersecurity Checklist | Network segmentation between IT/OT and within OT zones | **Substantially improved** post-remediation (Artifact 3, Section 7) — PLC and Historian database ports (5432) now default-deny from Engineering; administrative SSH access from Engineering remains authorized and is explicitly documented in zone firewall policy |
 | EPA Cybersecurity Checklist | Default credential elimination | **✅ Remediated (Aug 27, 2026)** — default account replaced and verified; see Section 6 and EPA Checklist item 2.A |
 | NIST 800-82 | Network architecture — Purdue Model zone separation | **Aligned** — remediation followed Purdue Level 1/2/3 separation explicitly (Artifact 3, Section 9) |
 | NIST 800-82 | Least-privilege conduit design | **Aligned** — only two conduits authorized post-remediation (HMI↔PLC, HMI↔Historian), both individually verified |
