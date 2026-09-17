@@ -10,6 +10,8 @@ compliance package — presented as an assessor would deliver it to a utility.
 **Subject:** Shenandoah Valley Water Authority — a fictional community water
 system, modeled on the process and network realities of a real one.
 
+**Author:** Moses Perodin · [LinkedIn](https://www.linkedin.com/in/moses-r-perodin-mba-a78375b/)
+
 **Start here:** [Artifact 3 — Segmentation Assessment](docs/artifacts/Artifact-3-Segmentation-Assessment.md) (flagship, technical) · [Artifact 8 — Client Deliverable Report](docs/artifacts/Artifact-8-Client-Deliverable-Report.md) (executive summary, non-technical)
 
 ---
