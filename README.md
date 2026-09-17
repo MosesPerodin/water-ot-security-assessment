@@ -35,7 +35,8 @@ Three things distinguish the work:
   was doing nothing: firewall rules never enforced by the platform, an IDS
   reporting healthy while inspecting zero packets, a custom rule silently ignored
   on a path mismatch. Every claim traces to a captured command output, and
-  re-verification uses the identical method as the original test.
+  re-verification repeats the same commands, flags, and source hosts as the
+  original test.
 - **Unresolved findings are legitimate output.** Two investigations (a PLC→historian
   egress anomaly, a port-mirroring fault four layers deep) were paused and
   documented rather than chased indefinitely or quietly dropped. Two false-positive
