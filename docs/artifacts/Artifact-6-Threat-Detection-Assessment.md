@@ -119,36 +119,41 @@ Representative alert output:
 
 ### Finding 6.4 — Stock ET Open ruleset does not detect SSH credential-guessing; host-level logging provides compensating detection (High significance)
 
-**Test:** two detection paths evaluated via eight consecutive SSH authentication attempts with invalid credentials, from an unauthorized source in the Engineering zone (192.168.30.50) against the monitoring host (192.168.40.100), September 16, 2026, 21:28:10–21:30:38 UTC.
+**Test:** two detection paths evaluated against the same eight SSH connections, each carrying one invalid-credential authentication attempt, from an unauthorized source in the Engineering zone (192.168.30.50) against the monitoring host (192.168.40.100), September 17, 2026, 21:45:34–21:46:27 UTC. Each connection was limited to a single password attempt (`NumberOfPasswordPrompts=1`), so one connection maps to exactly one authentication failure and one source port, making the wire-side and host-side event counts directly comparable.
 
 **Path 1 — Wire-observable (Suricata IDS):**
 
-| Metric | Baseline | Post-test | Delta |
-|---|---|---|---|
-| Total log records | 9,930 | 9,944 | +14 |
-| SSH protocol events | 22 | 31 | +9 |
-| **Alert events** | **0** | **0** | **0** |
+Per-run event counts for the attack source/target pair (192.168.30.50 → 192.168.40.100:22), extracted from `eve.json` by source, destination, and time window:
 
-All eight attempts reached the target's SSH service, failed authentication, and were logged by Suricata as SSH protocol events with correct source attribution. **The traffic was inspected. No rule matched.**
+| Event type | Count | Meaning |
+|---|---|---|
+| `flow` records | 8 | eight distinct TCP flows — one per connection |
+| `ssh` protocol records | 8 | Suricata parsed each session as SSH (app_proto=ssh); client `OpenSSH_10.0p2` and server `OpenSSH_9.6p1` version strings extracted |
+| Positive-control alerts (SID 9000001) | present, in-window | the local SSH-connection rule fired on this exact traffic, proving the sensor was live and inspecting |
+| **Stock ET Open alerts** | **0** | **no signature in the 52,051-rule set matched the credential-guessing pattern** |
+
+Suricata saw all eight connections, identified the protocol, and extracted both banner strings. **The traffic was inspected and parsed. No stock rule matched.** The wire path cannot observe the authentication *outcome* — SSH is encrypted, so the sensor sees eight connections but not that each one failed. That distinction is why host-level logging is required as a compensating control.
 
 **Path 2 — Host-observable (sshd authentication logs):**
 
-| Metric | Baseline | Post-test | Delta |
-|---|---|---|---|
-| `/var/log/auth.log` line count | 363 | 462 | +99 |
-| **Failed password entries** | **0** | **8** | **+8** |
-| Failed password entries from 192.168.30.50 (cross-host) | **0** | **1** | **+1** |
-| Failed password entries from 192.168.40.100 (self-sourced) | **0** | **7** | **+7** |
+Failed-authentication events in `/var/log/auth.log`, isolated to the attack source and test window:
 
-sshd natively logs failed authentication attempts to `/var/log/auth.log`. Eight total failed attempts were logged. Seven attempts appear to have been sourced locally from the target itself (192.168.40.100); one genuine cross-host attempt from the attack source (192.168.30.50, port 40566, 21:30:38 UTC) demonstrates correct source attribution when traffic arrives from the network. sshd also deduplicated repeated failures within a single connection (`"message repeated 2 times"`), a built-in rate-limiting behavior.
+| Metric | Value |
+|---|---|
+| `Failed password` entries from 192.168.30.50 in-window | 8 |
+| Distinct source ports | 8 (one per connection) |
+| Distinct sshd PIDs | 8 (one per connection) |
+| Entries from any other source in-window (contamination check) | 0 |
+
+sshd natively logs failed authentication to `/var/log/auth.log`. All eight attempts were recorded with correct source-IP attribution (192.168.30.50), one distinct source port and one distinct sshd PID per connection, and no entries from any other source in the window. Where the wire path sees connections, the host log sees outcomes — the eight authentication failures the encrypted session concealed from Suricata are individually recorded here.
 
 **Mechanism, verified against the loaded ruleset and host logs:**
 
-Wire level: the full ET Open set was active (52,051 signatures). Examination of SSH-related signatures found rules keyed to specific attack-tool fingerprints and client software banners, but no signature that tracks authentication failure frequency and alerts on a threshold. Rate-based detection requires explicit `threshold.config` entries or `detection_filter` rules, neither of which is present in a default deployment.
+Wire level: the full ET Open set was active (52,051 signatures). Examination of SSH-related signatures found rules keyed to specific attack-tool fingerprints and client software banners, but no signature that tracks authentication-failure frequency and alerts on a threshold. Rate-based detection requires explicit `threshold.config` entries or `detection_filter` rules, neither of which is present in a default deployment.
 
 Host level: sshd's built-in authentication logging is enabled by default and captured by syslog. Failed credentials are recorded with source IP, target user, port, and timestamp attribution. A monitoring solution that parses syslog (ELK stack, Splunk, SIEM) could alert on repeated failures from a single source — detection that Suricata's wire-level rules do not provide out of the box.
 
-**Honest scoping of this finding:** the test environment's network configuration resulted in most loop iterations executing locally rather than from the intended remote source; however, the single cross-host attempt (21:30:38 from 192.168.30.50) confirms that sshd correctly attributes source IP when traffic originates externally. A production brute-force attack would likely involve higher connection rates, larger source-IP diversity, or dictionary-based guessing. This test establishes that **no wire-level rate-based detection exists in the stock ET Open ruleset**, and that **host-level logging compensates but requires a separate monitoring pipeline** to operationalize alerting.
+**Scope and method:** this run followed two earlier same-day attempts. The first allowed multiple password prompts per connection, collapsing eight loop iterations into three TCP connections and making wire-side and host-side counts non-comparable; the method was corrected to one password attempt per connection (`NumberOfPasswordPrompts=1`) for the second and third attempts, and this final run is the one for which both detection paths were captured and verified together. Eight single-attempt connections is a modest volume, chosen so the two detection paths map one-to-one and the evidence is unambiguous, not to simulate a high-rate attack. A production brute-force attempt would involve higher connection rates, larger source-IP diversity, or dictionary-based guessing. What this test establishes is narrow and verified: the stock ET Open ruleset produced **zero** alerts on credential-guessing traffic it demonstrably inspected and parsed, while host-level authentication logging captured every attempt with correct attribution. It does not establish how a rate-based rule *would* perform if configured — only that none exists by default.
 
 **Consequence framing:** credential weakness is the single most significant vulnerability class documented in this portfolio — Finding 1 of Artifact 3 was live default credentials on the PLC management interface, and the RRA scored the associated risk highest of any in the environment. A utility deploying only a default IDS configuration, without syslog aggregation or host-level authentication monitoring, would have no alert-based indication of an ongoing credential-guessing attempt against its OT assets. **The control most needed against the highest-scored risk requires defense-in-depth: both wire-level detection (if configured beyond stock rules) and host-level authentication monitoring.**
 
