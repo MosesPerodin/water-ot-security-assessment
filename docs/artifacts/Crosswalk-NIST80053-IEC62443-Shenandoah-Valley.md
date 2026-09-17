@@ -30,9 +30,9 @@
 
 ## Summary
 
-Of the twelve controls mapped, **four are fully implemented and evidenced** (SC-7, CM-8, CM-6, IR-8/IR-4), **three are partially implemented** (AC-4, AC-3, IA-5), and **five remain unaddressed** (IA-2, SC-8, CP-9, SR-2).
+Of the thirteen controls mapped, **six are implemented** (SC-7 fully evidenced; CM-8, CM-6, IR-8, IR-4, and RA-5 implemented with a maturity, exercise, or recurrence caveat noted in their own rows), **three are partially implemented** (AC-4, AC-3, IA-5), and **four are not implemented** (IA-2, SC-8, CP-9, SR-2).
 
-*(Updated Aug 27, 2026 — IA-5 moved from "Not implemented" to "Implemented" following remediation of Finding 1, the OpenPLC default-credential vulnerability.)*
+*(Updated Aug 27, 2026 — IA-5 moved from "Not implemented" to "Partially implemented" following remediation of Finding 1, the OpenPLC default-credential vulnerability; password policy, rotation, complexity, and MFA remain unaddressed.)*
 
 This distribution is consistent across all Phase 4 documents rather than an artifact of how this crosswalk alone was scored: the implemented controls now cluster around network segmentation, information flow enforcement, configuration management, and — as of this update — credential management, closing the two most directly exploitable gaps identified in the assessment. The unaddressed controls cluster around multi-factor authentication, encryption in transit, backup/recovery, and supply chain — none of which network segmentation resolved on its own, and all of which are already captured in the RRA's prioritized remediation roadmap.
 

@@ -114,8 +114,8 @@ The HMI's Apache service runs on port 80 (HTTP) with no TLS. Any HMI session, in
 Remediation followed the IEC 62443 zones-and-conduits model: each zone gets a default-deny boundary, and only explicitly needed conduits are opened.
 
 **Zone boundaries enforced (via Proxmox host-level firewall, `pve-firewall`):**
-- Field/Control (vmbr10) — default deny inbound; SSH permitted only from the zone's own gateway IP (administrative access pattern)
-- Supervisory/HMI (vmbr20) — default deny inbound; SSH permitted only from the zone's own gateway IP
+- Field/Control (vmbr10) — default deny inbound; SSH permitted from two sources: the zone gateway IP `192.168.10.1` (host-originated Proxmox management) and the Engineering subnet `192.168.30.0/24` (administrative access from any of 256 addresses in that zone, not a single host)
+- Supervisory/HMI (vmbr20) — default deny inbound; SSH permitted from two sources: the zone gateway IP `192.168.20.1` (host-originated Proxmox management) and the Engineering subnet `192.168.30.0/24` (administrative access from any of 256 addresses in that zone, not a single host)
 - Historian's PostgreSQL port (5432) — permitted from the HMI's IP (192.168.20.100) and the PLC's IP (192.168.10.100); blocked from Engineering and all other sources. The PLC rule was present but carried zero packets during the assessment window (egress anomaly, Appendix A); the HMI rule is the live operational conduit.
 
 **Conduits explicitly authorized:**

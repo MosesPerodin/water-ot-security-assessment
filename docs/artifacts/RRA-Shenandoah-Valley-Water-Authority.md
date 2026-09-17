@@ -80,7 +80,7 @@ Likelihood and impact scored 1 (low) – 5 (high). Likelihood reflects **pre-rem
 | EPA Cybersecurity Checklist | Network segmentation between IT/OT and within OT zones | **Substantially improved** post-remediation (Artifact 3, Section 7) — PLC and Historian database ports (5432) now default-deny from Engineering; administrative SSH access from Engineering remains authorized and is explicitly documented in zone firewall policy |
 | EPA Cybersecurity Checklist | Default credential elimination | **✅ Remediated (Aug 27, 2026)** — default account replaced and verified; see Section 6 and EPA Checklist item 2.A |
 | NIST 800-82 | Network architecture — Purdue Model zone separation | **Aligned** — remediation followed Purdue Level 1/2/3 separation explicitly (Artifact 3, Section 9) |
-| NIST 800-82 | Least-privilege conduit design | **Aligned** — only two conduits authorized post-remediation (HMI↔PLC, HMI↔Historian), both individually verified |
+| NIST 800-82 | Least-privilege conduit design | **Substantially improved** — three operational conduits authorized post-remediation (HMI→PLC Modbus/502, PLC→Historian PostgreSQL/5432, HMI→Historian PostgreSQL/5432), each individually verified; administrative access is broader than a strict least-privilege reading would imply — gateway SSH (host-originated, one source per host) plus Engineering-wide SSH (192.168.30.0/24, all four OT hosts) and syslog (all four OT subnets to Monitor) are also authorized in policy |
 
 ---
 

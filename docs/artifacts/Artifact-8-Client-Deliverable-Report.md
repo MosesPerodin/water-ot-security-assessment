@@ -55,7 +55,7 @@ In plain terms: at the start of this engagement, anyone who gained access to a s
 
 ## 3. How the Assessment Was Conducted
 
-**Approach:** the assessment established a documented baseline of the network's actual state, implemented segmentation controls, and then repeated identical tests to verify the controls worked as intended. Findings are based on what was measured, not on configuration review alone.
+**Approach:** the assessment established a documented baseline of the network's actual state, implemented segmentation controls, and then repeated the tests — with a disclosed scan-flag change and the HMI's mid-window remediation noted — to verify the controls worked as intended. Findings are based on what was measured, not on configuration review alone.
 
 **That distinction proved important.** In three separate instances during this engagement, security configuration existed in the correct files, appeared correct on inspection, and was not actually in effect:
 

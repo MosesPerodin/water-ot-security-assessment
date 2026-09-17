@@ -51,7 +51,7 @@
 | 2.U | Protect security logs from tampering? | ❌ | Not assessed |
 | 2.V | Prohibit unauthorized hardware connections? | N/A | Virtualized lab environment; physical port control does not apply |
 | 2.W* | Ensure no unnecessary exploitable services on exposed assets? | ✅ | Directly addressed by segmentation remediation — PLC's four ICS protocol ports (Modbus, EtherNet/IP, S7comm, HTTP management) are no longer reachable from Engineering |
-| 2.X* | Eliminate OT asset connections to the public Internet? | ✅ | OT-zone hosts have no external internet egress by design. Administrative SSH access between zones is permitted and documented in the zone firewall policies (Artifact 3, Section 5) |
+| 2.X* | Eliminate OT asset connections to the public Internet? | ⚠️ | A NAT egress path (MASQUERADE) exists for three OT subnets — Monitoring, Field/Control, and Supervisory — routed via the management bridge (LAB-TOPOLOGY.md, NAT table). The Monitoring subnet has carried traffic through this path (packet counter non-zero); Field/Control and Supervisory show the rule configured but zero packets. Administrative SSH access between zones is permitted and documented in the zone firewall policies (Artifact 3, Section 5) |
 
 ---
 
@@ -91,7 +91,7 @@
 
 *(Updated Aug 27, 2026 — item 2.A moved from ❌ to ✅ following credential remediation.)*
 
-**Reading this honestly:** the ✅ items cluster almost entirely around network segmentation and documentation (2.F, 2.O, 2.P, 2.W, 2.X) — the exact area Artifact 3 targeted. That concentration is expected and should be stated plainly rather than implied as broader coverage than it is.
+**Reading this honestly:** the ✅ items cluster almost entirely around network segmentation and documentation (2.F, 2.O, 2.P, 2.W) — the exact area Artifact 3 targeted. That concentration is expected and should be stated plainly rather than implied as broader coverage than it is.
 
 **The ❌ item carrying the most remaining weight** is now 2.H (MFA — absent entirely). 2.A (default passwords — Finding 1) was remediated Aug 27, 2026, closing what had been the most directly exploitable item on this checklist — no technical barrier had stood between an attacker with network access and full PLC control prior to the fix. Both 2.A and 2.H are Priority items on EPA's own Top Cyber Actions list; 2.A is now closed, and 2.H remains captured in the RRA's remediation roadmap.
 

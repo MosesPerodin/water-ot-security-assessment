@@ -50,7 +50,7 @@ read in roughly this order — each depends on inputs from the ones before it.
 | # | Artifact | What it establishes |
 |---|---|---|
 | 2 | [ICS401V Operations Linkage](docs/operations-linkage/ICS401V-Operations-Linkage.md) | The operations-to-assessment reasoning the rest of the portfolio applies |
-| 3 | [Segmentation Assessment](docs/artifacts/Artifact-3-Segmentation-Assessment.md) **(flagship)** | Before/after network segmentation, verified by identical repeat testing. Origin of Findings 1–4 |
+| 3 | [Segmentation Assessment](docs/artifacts/Artifact-3-Segmentation-Assessment.md) **(flagship)** | Before/after network segmentation, verified by repeat testing with a disclosed methodology change and the HMI's mid-window remediation noted. Origin of Findings 1–4 |
 | 4 | [Asset Inventory & Criticality](docs/artifacts/Artifact-4-Asset-Inventory-Criticality.md) | Consequence-based criticality ranking; feeds the RRA's asset register |
 | 5 | [MITRE ATT&CK — Oldsmar Case Study](docs/artifacts/Artifact-5-ATTCK-Oldsmar-Case-Study.md) | Blue-team retrospective on the 2021 Oldsmar incident, lessons applied to this architecture |
 | 6 | [Threat Detection Assessment](docs/artifacts/Artifact-6-Threat-Detection-Assessment.md) | Suricata deployment, detection-coverage evaluation, positive-control verification. Origin of Findings 6.1–6.4 |
