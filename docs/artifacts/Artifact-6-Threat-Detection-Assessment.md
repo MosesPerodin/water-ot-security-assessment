@@ -161,6 +161,8 @@ Host level: sshd's built-in authentication logging is enabled by default and cap
 
 ## 6. Assessment of Detection Posture
 
+**Legend:** ✅ Verified — ⚠️ Partial (working but incomplete) — ❌ Not achieved
+
 | Capability | Status | Evidence |
 |---|---|---|
 | IDS deployed and operational | ✅ Verified | Stable service, zero restarts over multi-day period |
@@ -170,8 +172,8 @@ Host level: sshd's built-in authentication logging is enabled by default and cap
 | Alert output to `fast.log` and `eve.json` | ✅ Verified | Alerts present in both formats |
 | Reconnaissance/scan detection | ❌ Not achieved | Blocked traffic never reaches sensor (Finding 6.3) |
 | Credential-attack detection | ⚠️ Partial | No wire-level signature in stock ruleset; host-level authentication logging verified as a working compensating control (Finding 6.4) |
-| Cross-zone conduit inspection | ⚠️ Not achieved | Mirroring unresolved (Section 7) |
-| OT protocol inspection (Modbus, S7comm, EtherNet/IP) | ⚠️ Not evaluated | Dependent on cross-zone visibility |
+| Cross-zone conduit inspection | ❌ Not achieved | Mirroring unresolved (Section 7) |
+| OT protocol inspection (Modbus, S7comm, EtherNet/IP) | ❌ Not evaluated | Dependent on cross-zone visibility |
 
 **Overall:** the sensor works. Reconnaissance against it goes undetected entirely (Finding 6.3) — a genuine coverage gap. Credential-guessing is a partial miss, not a full one: the wire-level signature gap is real, but host-level logging is a verified compensating control. That is the finding — not a deployment failure, but an accurate characterization of what a default IDS deployment does and does not provide.
 
