@@ -62,7 +62,7 @@ Likelihood and impact scored 1 (low) – 5 (high). Likelihood reflects **pre-rem
 | Risk | Likelihood | Impact | Score | Rating |
 |---|---|---|---|---|
 | Unauthorized PLC parameter modification via default creds + open Modbus/EtherNet-IP | ~~5~~ **2** | 5 | ~~25~~ **10** | ~~Critical~~ **Medium** *(re-scored Aug 27, 2026 — default credential path closed; see Section 6)* |
-| Historian compromise via unrestricted network path to PostgreSQL | 4 | 3 | 12 | **High** |
+| Historian compromise via unrestricted network path to PostgreSQL | ~~4~~ **2** | 3 | ~~12~~ **6** | ~~High~~ **Medium** *(re-scored Aug 26, 2026 — PostgreSQL restricted to PLC and HMI hosts only, per Finding 2; likelihood held at 2, not 1, because Engineering-wide SSH access (192.168.30.0/24) still reaches the Historian host directly, per its .fw policy — the credential path closed, the zone did not)* |
 | Lateral movement from Engineering into Field/Control zone generally | 4 | 4 | 16 | **High** |
 | HMI session interception (unencrypted HTTP) | 2 | 3 | 6 | **Medium** |
 | Configuration-vs-enforcement gap recurring on a future host | 3 | 3 | 9 | **Medium** |

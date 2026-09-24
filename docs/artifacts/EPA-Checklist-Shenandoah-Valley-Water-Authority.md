@@ -83,8 +83,8 @@
 
 | Category | ✅ | ⚠️ | ❌ | N/A |
 |---|---|---|---|---|
-| Identify (7 items) | 0 | 2 | 5 | 1 |
-| Protect (24 items) | 6 | 8 | 5 | 6 |
+| Identify (7 items) | 0 | 2 | 4 | 1 |
+| Protect (24 items) | 5 | 9 | 5 | 5 |
 | Detect (1 item) | 0 | 1 | 0 | 0 |
 | Respond (1 item) | 1 | 0 | 0 | 0 |
 | Recover (1 item) | 0 | 1 | 0 | 0 |
