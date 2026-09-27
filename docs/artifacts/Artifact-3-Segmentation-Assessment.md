@@ -177,10 +177,9 @@ No change. Included as the negative control confirming the remediation work did 
 |---|---|---|---|---|
 | PLC (192.168.10.100) | Field/Control | 5 (22, 102, 502, 8080, 44818) | 1 (22) | **−4, all ICS protocol ports closed** |
 | Historian (192.168.20.101) | Supervisory | 2 (22, 5432) | 1 (22) | **−1, database port closed to Engineering** |
-| HMI (192.168.20.100) | Supervisory | 1 (22)* | 1 (22) | No change (already hardened pre-baseline) |
 | Monitor (192.168.40.100) | Monitoring | 1 (22) | 1 (22) | No change (control, no regression) |
 
-*HMI's true before-state ICS-relevant port was already filtered prior to baseline capture — see Section 2.
+The HMI (192.168.20.100) is excluded from this comparison. Its firewall remediation was completed before baseline evidence capture began (Section 2), so no genuine before-state measurement exists for it — including it here would present a hardened-then-measured host as an unchanged one. Its actual remediation is documented in Section 2 and Finding 4.
 
 The core result: **the PLC's exploitable network attack surface from the Engineering zone was reduced by 80% (5 ports to 1), and the historian's database port exposure to that same zone was eliminated entirely.** Administrative SSH access from Engineering remains open by design as the sole remaining conduit, documented in the firewall policy. No operational-data or control-logic access is available from Engineering through either protocol. Zero disruption to legitimate supervisory traffic.
 
