@@ -7,4 +7,4 @@ IN ACCEPT -source 192.168.10.0/24 -p tcp -dport 514
 IN ACCEPT -source 192.168.20.0/24 -p tcp -dport 514
 IN ACCEPT -source 192.168.30.0/24 -p tcp -dport 514
 IN ACCEPT -source 192.168.40.0/24 -p tcp -dport 514
-IN ACCEPT -source 192.168.30.0/24 -p tcp -dport 22
+IN ACCEPT -source 192.168.30.10 -p tcp -dport 22

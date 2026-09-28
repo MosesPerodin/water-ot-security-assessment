@@ -1,0 +1,6 @@
+[OPTIONS]
+enable: 1
+policy_in: DROP
+
+[RULES]
+IN ACCEPT -source 192.168.1.167/32 -p tcp -dport 22
