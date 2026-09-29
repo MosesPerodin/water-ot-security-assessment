@@ -51,7 +51,7 @@
 | 2.U | Protect security logs from tampering? | ❌ | Not assessed |
 | 2.V | Prohibit unauthorized hardware connections? | N/A | Virtualized lab environment; physical port control does not apply |
 | 2.W* | Ensure no unnecessary exploitable services on exposed assets? | ✅ | Directly addressed by segmentation remediation — PLC's four ICS protocol ports (Modbus, EtherNet/IP, S7comm, HTTP management) are no longer reachable from Engineering |
-| 2.X* | Eliminate OT asset connections to the public Internet? | ⚠️ | A NAT egress path (MASQUERADE) exists for three OT subnets — Monitoring, Field/Control, and Supervisory — routed via the management bridge (LAB-TOPOLOGY.md, NAT table). The Monitoring subnet has carried traffic through this path (packet counter non-zero); Field/Control and Supervisory show the rule configured but zero packets. Administrative SSH access between zones is permitted and documented in the zone firewall policies (Artifact 3, Section 5) |
+| 2.X* | Eliminate OT asset connections to the public Internet? | ⚠️ | A NAT egress path (MASQUERADE) is configured for three OT subnets — Monitoring, Field/Control, and Supervisory — but Finding 3.2 (Artifact 3, Appendix A.1) confirms this path is non-functional: outbound packets are sent and correctly translated, but replies are dropped by each host's own firewall before delivery, due to a platform-level conntrack/zone conflict. No subnet currently has working outbound internet access. Administrative SSH access between zones is permitted and documented in the zone firewall policies (Artifact 3, Section 5) |
 
 ---
 
