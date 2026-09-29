@@ -13,6 +13,9 @@ These are the per-VM `pve-firewall` policy files as deployed on the Proxmox host
 | `104-monitor-policy.fw` | 104 monitor-wireshark | Monitoring | default-deny; syslog/514 from all four OT zones; SSH from jumpbox (192.168.30.10) only |
 | `105-kali-policy.fw` | 105 kali-attack | Engineering | default-deny; SSH from the operator's management-network host (192.168.1.167) only — no gateway fallback, deliberate |
 | `106-jumpbox-policy.fw` | 106 jumpbox | Engineering | default-deny; SSH from the operator's management-network host (192.168.1.167) and the Engineering gateway (192.168.30.1) — the administrative chokepoint all other Engineering-zone access now routes through |
+| `cluster.fw` | cluster-wide, not tied to a single VM | Management | GUI (8006) and SSH (22) from the management network (192.168.1.0/24); ICMP gateway-reachability from Field/Control (192.168.10.0/24) and Supervisory (192.168.20.0/24) only — no default-deny `policy_in` is set at this scope, unlike the per-VM files above |
+
+`cluster.fw` governs the Proxmox host itself (`/etc/pve/firewall/cluster.fw`), not a guest — it is the only file in this set with no `[VMID].fw` naming pattern. Its ICMP gateway-reachability rules cover only Field/Control (`192.168.10.0/24`) and Supervisory (`192.168.20.0/24`); it does **not** extend to Engineering (`192.168.30.0/24`) or Monitoring (`192.168.40.0/24`) — those zones have no cluster-level ICMP allow rule, and a reader should not assume this file provides broader gateway-ping coverage than the two zones actually listed.
 
 The `192.168.<zone>.1` SSH allow rules exist because the Proxmox host sources
 connections to its guests from the bridge-local gateway IP, not the management
