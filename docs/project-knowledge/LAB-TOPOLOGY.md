@@ -326,12 +326,12 @@ default via 192.168.1.1 dev vmbr0 proto kernel onlink
 ### iptables -t nat -L POSTROUTING -n -v
 
 ```
-Chain POSTROUTING (policy ACCEPT 193K packets, 12M bytes)
+Chain POSTROUTING (policy ACCEPT 1433K packets, 91M bytes)
  pkts bytes target     prot opt in     out     source               destination         
-    9   690 MASQUERADE  all  --  *      vmbr0   192.168.40.0/24      0.0.0.0/0           
-    0     0 MASQUERADE  all  --  *      vmbr0   192.168.10.0/24      0.0.0.0/0           
-    0     0 MASQUERADE  all  --  *      vmbr0   192.168.20.0/24      0.0.0.0/0           
+  970 59628 MASQUERADE  all  --  *      vmbr0   192.168.40.0/24      0.0.0.0/0           
 ```
+
+**Note (2026-09-28):** Field's (`192.168.10.0/24`) and Supervisory's (`192.168.20.0/24`) MASQUERADE rules were removed as dead/unused configuration — neither ever carried real traffic (0 packets, confirmed at multiple points across this project). Only Monitoring's rule remains, retained intentionally despite being confirmed non-functional: Finding 3.2 (Artifact 3, Appendix A.1) traces why a MASQUERADE rule with a non-zero packet counter is not evidence of working egress — outbound packets leave correctly translated, but replies are dropped by the guest's own firewall before delivery.
 
 ### iptables -L FORWARD -n -v
 
