@@ -1,7 +1,7 @@
-# ICS401V Concepts Linked to Wastewater Operations Experience
+# ICS401V Concepts Linked to Water and Wastewater Operations Experience
 
 **Author:** Moses Perodin
-**Context:** 10+ years in wastewater and water treatment operations across multiple facility types — activated sludge plants, RO (reverse osmosis) units, pond systems, CSO (combined sewer overflow) handling, and municipal treatment systems. Currently operating a pretreatment anaerobic digester plant using Ignition SCADA HMI for monitoring and operational control. This document maps ICS401V cybersecurity assessment concepts to direct operational experience running the following treatment train:
+**Context:** 10+ years across both drinking water and wastewater operations, spanning multiple facility types — activated sludge plants, RO (reverse osmosis) units, pond systems, CSO (combined sewer overflow) handling, and municipal treatment systems. Currently operating a pretreatment anaerobic digester plant using Ignition SCADA HMI for monitoring and operational control. This document maps ICS401V cybersecurity assessment concepts to direct operational experience running the following treatment train:
 
 - Influent EQ tank
 - 2x Anaerobic digesters (methane-producing)
