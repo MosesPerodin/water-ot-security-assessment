@@ -62,7 +62,7 @@ Likelihood and impact scored 1 (low) – 5 (high). Likelihood reflects **pre-rem
 | Risk | Likelihood | Impact | Score | Rating |
 |---|---|---|---|---|
 | Unauthorized PLC parameter modification via default creds + open Modbus/EtherNet-IP | ~~5~~ **2** | 5 | ~~25~~ **10** | ~~Critical~~ **Medium** *(re-scored Aug 27, 2026 — default credential path closed; see Section 6)* |
-| Historian compromise via unrestricted network path to PostgreSQL | ~~4~~ **2** | 3 | ~~12~~ **6** | ~~High~~ **Medium** *(re-scored Aug 26, 2026 — PostgreSQL restricted to PLC and HMI hosts only, per Finding 2; likelihood held at 2, not 1, because Engineering-wide SSH access (192.168.30.0/24) still reaches the Historian host directly, per its .fw policy — the credential path closed, the zone did not)* |
+| Historian compromise via unrestricted network path to PostgreSQL | ~~4~~ **1** | 3 | ~~12~~ **3** | ~~High~~ **Low** *(re-scored twice: Aug 26, 2026 — PostgreSQL restricted to PLC and HMI hosts only, per Finding 2; then Sept 27, 2026 — SSH access to Historian narrowed from the full Engineering subnet to jumpbox specifically, per the jump-host restriction rollout. Likelihood dropped from 2 to 1: reaching Historian via SSH now requires first compromising jumpbox, itself restricted to a single management host plus the Proxmox gateway path, not open reach from anywhere in Engineering — a materially rarer chain than the original scoring assumed)* |
 | Lateral movement from Engineering into Field/Control zone generally | 4 | 4 | 16 | **High** |
 | HMI session interception (unencrypted HTTP) | 2 | 3 | 6 | **Medium** |
 | Configuration-vs-enforcement gap recurring on a future host | 3 | 3 | 9 | **Medium** |
@@ -77,10 +77,10 @@ Likelihood and impact scored 1 (low) – 5 (high). Likelihood reflects **pre-rem
 | Framework | Relevant Provision | Shenandoah Valley Status |
 |---|---|---|
 | AWIA §2013 | Risk and Resilience Assessment — malevolent acts and natural hazards to system | This document, plus Artifact 3, constitutes the cybersecurity-malevolent-act component of the RRA requirement |
-| EPA Cybersecurity Checklist | Network segmentation between IT/OT and within OT zones | **Substantially improved** post-remediation (Artifact 3, Section 7) — PLC and Historian database ports (5432) now default-deny from Engineering; administrative SSH access from Engineering remains authorized and is explicitly documented in zone firewall policy |
+| EPA Cybersecurity Checklist | Network segmentation between IT/OT and within OT zones | **Substantially improved** post-remediation (Artifact 3, Section 7) — PLC and Historian database ports (5432) now default-deny from Engineering; administrative SSH access via jumpbox (`192.168.30.10`) remains authorized and is explicitly documented in zone firewall policy |
 | EPA Cybersecurity Checklist | Default credential elimination | **✅ Remediated (Aug 27, 2026)** — default account replaced and verified; see Section 6 and EPA Checklist item 2.A |
 | NIST 800-82 | Network architecture — Purdue Model zone separation | **Aligned** — remediation followed Purdue Level 1/2/3 separation explicitly (Artifact 3, Section 9) |
-| NIST 800-82 | Least-privilege conduit design | **Substantially improved** — three operational conduits authorized post-remediation (HMI→PLC Modbus/502, PLC→Historian PostgreSQL/5432, HMI→Historian PostgreSQL/5432), each individually verified; administrative access is broader than a strict least-privilege reading would imply — gateway SSH (host-originated, one source per host) plus Engineering-wide SSH (192.168.30.0/24, all four OT hosts) and syslog (all four OT subnets to Monitor) are also authorized in policy |
+| NIST 800-82 | Least-privilege conduit design | **Substantially improved** — three operational conduits authorized post-remediation (HMI→PLC Modbus/502, PLC→Historian PostgreSQL/5432, HMI→Historian PostgreSQL/5432), each individually verified; administrative access is broader than a strict least-privilege reading would imply — gateway SSH (host-originated, one source per host) plus SSH from jumpbox (`192.168.30.10`, narrowed from the full Engineering subnet on 2026-09-27) to all four OT hosts, and syslog (all four OT subnets to Monitor) are also authorized in policy |
 
 ---
 

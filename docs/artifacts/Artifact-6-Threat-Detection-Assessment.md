@@ -111,7 +111,7 @@ Representative alert output:
 
 **IDS result:** protocol event records appeared for port 22 only. Ports 80, 443, 514, and 8080 produced no records of any kind — not merely no alerts, but no evidence the traffic existed.
 
-**Mechanism, confirmed via live firewall counters:** the host's hypervisor-level firewall enforces default-deny, permitting only SSH from the Engineering subnet and syslog from the OT subnets. Counters captured immediately after the scan showed the catch-all drop rules absorbing the scan packets directed at non-permitted ports. Suricata operates inside the guest, downstream of that enforcement point — the dropped packets were never available for inspection.
+**Mechanism, confirmed via live firewall counters:** the host's hypervisor-level firewall enforces default-deny, permitting only SSH from jumpbox (`192.168.30.10`, narrowed from the full Engineering subnet on 2026-09-27) and syslog from the OT subnets. Counters captured immediately after the scan showed the catch-all drop rules absorbing the scan packets directed at non-permitted ports. Suricata operates inside the guest, downstream of that enforcement point — the dropped packets were never available for inspection.
 
 **Consequence framing:** this is the security equivalent of a plant camera positioned inside a locked room. It sees whoever comes through the door; it has no view of anyone testing the lock. In an OT environment, **reconnaissance against a control host is itself a high-value indicator** — it typically precedes an intrusion attempt and is one of the earliest opportunities to detect an adversary. An IDS placed as this one is cannot provide that indicator.
 

@@ -75,13 +75,13 @@ PLC&rarr;historian arrow is authorized in policy but does not pass traffic
 | 2 | HMI `192.168.20.100` | Historian `192.168.20.101` | TCP 5432 / PostgreSQL | Process data logging (added during remediation) | `102.fw` |
 | 3 | PLC `192.168.10.100` | Historian `192.168.20.101` | TCP 5432 / PostgreSQL | *Intended* direct logging — **permitted in `102.fw` but non-functional** (egress anomaly, Artifact 3 Appendix A). Data is relayed via conduit 2. | `102.fw` |
 | 4 | All OT zones `10/20/30/40.0/24` | Monitor `192.168.40.100` | TCP 514 / syslog | Log / telemetry shipping | `104.fw` |
-| 5 | Engineering `192.168.30.0/24` | PLC, HMI, Historian, Monitor | TCP 22 / SSH | Administrative access | `100/101/102/104.fw` |
+| 5 | Jumpbox `192.168.30.10` | PLC, HMI, Historian, Monitor | TCP 22 / SSH | Administrative access — narrowed from the full Engineering subnet (`192.168.30.0/24`) on 2026-09-27 | `100/101/102/104.fw` |
 | 6 | Zone gateway `<zone>.1` (Proxmox host) | PLC `.10.1`, HMI + Historian `.20.1` | TCP 22 / SSH | Host-originated management (Proxmox sources from the bridge-local gateway IP, not the management IP) | `100/101/102.fw` |
 | 7 | Management `192.168.1.0/24` | Proxmox host `192.168.1.250` | TCP 8006 / 22 | Hypervisor GUI + SSH | `cluster.fw` |
 | 8 | `192.168.10.0/24`, `192.168.20.0/24` | Zone gateway `.1` | ICMP | Gateway reachability check | `cluster.fw` |
 
 The Monitor host (`104.fw`) has **no** gateway-SSH rule — it is administered
-over SSH from the Engineering zone only (`ssh -J kali ubuntu@192.168.40.100`).
+over SSH from jumpbox only (`ssh -J pve,ubuntu@192.168.30.10 ubuntu@192.168.40.100`) — Kali is not an administrative relay and cannot reach Monitor under current policy.
 
 ---
 

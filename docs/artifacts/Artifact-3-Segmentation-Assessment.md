@@ -114,8 +114,8 @@ The HMI's Apache service runs on port 80 (HTTP) with no TLS. Any HMI session, in
 Remediation followed the IEC 62443 zones-and-conduits model: each zone gets a default-deny boundary, and only explicitly needed conduits are opened.
 
 **Zone boundaries enforced (via Proxmox host-level firewall, `pve-firewall`):**
-- Field/Control (vmbr10) — default deny inbound; SSH permitted from two sources: the zone gateway IP `192.168.10.1` (host-originated Proxmox management) and the Engineering subnet `192.168.30.0/24` (administrative access from any of 256 addresses in that zone, not a single host)
-- Supervisory/HMI (vmbr20) — default deny inbound; SSH permitted from two sources: the zone gateway IP `192.168.20.1` (host-originated Proxmox management) and the Engineering subnet `192.168.30.0/24` (administrative access from any of 256 addresses in that zone, not a single host)
+- Field/Control (vmbr10) — default deny inbound; SSH permitted from two sources: the zone gateway IP `192.168.10.1` (host-originated Proxmox management) and jumpbox (`192.168.30.10`) — narrowed from the full Engineering subnet on 2026-09-27, per the network-segmentation README
+- Supervisory/HMI (vmbr20) — default deny inbound; SSH permitted from two sources: the zone gateway IP `192.168.20.1` (host-originated Proxmox management) and jumpbox (`192.168.30.10`) — narrowed from the full Engineering subnet on 2026-09-27, per the network-segmentation README
 - Historian's PostgreSQL port (5432) — permitted from the HMI's IP (192.168.20.100) and the PLC's IP (192.168.10.100); blocked from Engineering and all other sources. The PLC rule was present but carried zero packets during the assessment window (egress anomaly, Appendix A); the HMI rule is the live operational conduit.
 
 **Conduits explicitly authorized:**
@@ -181,7 +181,7 @@ No change. Included as the negative control confirming the remediation work did 
 
 The HMI (192.168.20.100) is excluded from this comparison. Its firewall remediation was completed before baseline evidence capture began (Section 2), so no genuine before-state measurement exists for it — including it here would present a hardened-then-measured host as an unchanged one. Its actual remediation is documented in Section 2 and Finding 4.
 
-The core result: **the PLC's exploitable network attack surface from the Engineering zone was reduced by 80% (5 ports to 1), and the historian's database port exposure to that same zone was eliminated entirely.** Administrative SSH access from Engineering remains open by design as the sole remaining conduit, documented in the firewall policy. No operational-data or control-logic access is available from Engineering through either protocol. Zero disruption to legitimate supervisory traffic.
+The core result: **the PLC's exploitable network attack surface from the Engineering zone was reduced by 80% (5 ports to 1), and the historian's database port exposure to that same zone was eliminated entirely.** Administrative SSH access remains open by design as the sole remaining conduit — narrowed to jumpbox (`192.168.30.10`) specifically as of 2026-09-27, rather than the full Engineering subnet — documented in the firewall policy. No operational-data or control-logic access is available from Engineering through either protocol. Zero disruption to legitimate supervisory traffic.
 
 ---
 
